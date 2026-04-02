@@ -36,7 +36,7 @@ The extension will remain active until you restart Firefox.
 ## Usage
 
 1. Open [Proton Mail](https://mail.proton.me) and open an email
-2. A **Translate** button appears above the email body
+2. A **Translate** button appears under the email dropdown menu
 3. Click it to translate — click **Show original** to revert
 4. To change the target language, click the extension icon in the toolbar and pick a language from the dropdown
 
