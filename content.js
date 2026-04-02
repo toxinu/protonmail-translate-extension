@@ -2,7 +2,21 @@
 // Injects a "Translate" item into the Protonmail message dropdown menu
 
 // SVG icon for the translate menu item (globe icon)
-const TRANSLATE_ICON = `<svg viewBox="0 0 256 256" class="icon-size-4 mr-2" role="img" focusable="false" aria-hidden="true"><path stroke="currentColor" stroke-width="6" stroke-linejoin="round" d="M235.57178,214.21094l-56-112a4.00006,4.00006,0,0,0-7.15528,0l-22.854,45.708a92.04522,92.04522,0,0,1-55.57275-20.5752A99.707,99.707,0,0,0,123.90723,60h28.08691a4,4,0,0,0,0-8h-60V32a4,4,0,0,0-8,0V52h-60a4,4,0,0,0,0,8h91.90772a91.74207,91.74207,0,0,1-27.91895,62.03357A91.67371,91.67371,0,0,1,65.23389,86.667a4,4,0,0,0-7.542,2.668,99.63009,99.63009,0,0,0,24.30469,38.02075A91.5649,91.5649,0,0,1,23.99414,148a4,4,0,0,0,0,8,99.54451,99.54451,0,0,0,63.99951-23.22461,100.10427,100.10427,0,0,0,57.65479,22.97192L116.4165,214.21094a4,4,0,1,0,7.15528,3.57812L138.46631,188H213.522l14.89453,29.78906a4,4,0,1,0,7.15528-3.57812ZM142.46631,180l33.52783-67.05566L209.522,180Z"></path></svg>`;
+function createTranslateIcon() {
+  const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+  svg.setAttribute("viewBox", "0 0 256 256");
+  svg.setAttribute("class", "icon-size-4 mr-2");
+  svg.setAttribute("role", "img");
+  svg.setAttribute("focusable", "false");
+  svg.setAttribute("aria-hidden", "true");
+  const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+  path.setAttribute("stroke", "currentColor");
+  path.setAttribute("stroke-width", "6");
+  path.setAttribute("stroke-linejoin", "round");
+  path.setAttribute("d", "M235.57178,214.21094l-56-112a4.00006,4.00006,0,0,0-7.15528,0l-22.854,45.708a92.04522,92.04522,0,0,1-55.57275-20.5752A99.707,99.707,0,0,0,123.90723,60h28.08691a4,4,0,0,0,0-8h-60V32a4,4,0,0,0-8,0V52h-60a4,4,0,0,0,0,8h91.90772a91.74207,91.74207,0,0,1-27.91895,62.03357A91.67371,91.67371,0,0,1,65.23389,86.667a4,4,0,0,0-7.542,2.668,99.63009,99.63009,0,0,0,24.30469,38.02075A91.5649,91.5649,0,0,1,23.99414,148a4,4,0,0,0,0,8,99.54451,99.54451,0,0,0,63.99951-23.22461,100.10427,100.10427,0,0,0,57.65479,22.97192L116.4165,214.21094a4,4,0,1,0,7.15528,3.57812L138.46631,188H213.522l14.89453,29.78906a4,4,0,1,0,7.15528-3.57812ZM142.46631,180l33.52783-67.05566L209.522,180Z");
+  svg.appendChild(path);
+  return svg;
+}
 /**
  * Translate text via the background script (Google Translate API).
  */
@@ -157,7 +171,11 @@ function createTranslateMenuItem(bodyEl) {
   btn.type = "button";
   btn.className = "dropdown-item-button w-full px-4 py-2 text-left flex flex-nowrap items-center";
   btn.setAttribute("data-testid", "message-view-more-dropdown:translate");
-  btn.innerHTML = `${TRANSLATE_ICON}<span class="flex-1 my-auto">${isTranslated ? "Show original" : "Translate"}</span>`;
+  btn.appendChild(createTranslateIcon());
+  const label = document.createElement("span");
+  label.className = "flex-1 my-auto";
+  label.textContent = isTranslated ? "Show original" : "Translate";
+  btn.appendChild(label);
 
   btn.addEventListener("click", async () => {
     const label = btn.querySelector("span");

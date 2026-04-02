@@ -2,6 +2,8 @@
 
 A Firefox extension that adds a **Translate** button to emails in [Protonmail](https://mail.proton.me) webmail.
 
+Firefox extension: https://addons.mozilla.org/en-US/firefox/addon/proton-mail-translate/
+
 ## Features
 
 - One-click translation of email content directly in the Protonmail interface
@@ -43,6 +45,7 @@ The extension will remain active until you restart Firefox.
 - Protonmail's DOM structure may change over time, which could break the selector used to find email bodies. The extension currently targets `[data-testid="message-content:body"]`.
 - This extension uses Manifest V2 for Firefox compatibility. A Manifest V3 migration may be needed in the future.
 - Partially written with AI as it is very simple extension.
+- Icon created by Freepik - Flaticon
 
 ## License
 

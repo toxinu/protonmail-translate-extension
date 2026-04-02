@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
-  "name": "Protonmail Translate",
+  "name": "Proton Mail Translate",
   "version": "0.1.0",
-  "description": "Translate emails in Protonmail webmail",
+  "description": "Translate emails in Proton Mail webmail",
   "permissions": [
     "activeTab",
     "storage",
@@ -21,18 +21,20 @@
   "browser_action": {
     "default_popup": "popup/popup.html",
     "default_icon": {
-      "48": "icons/icon-48.png",
-      "96": "icons/icon-96.png"
+      "512": "icons/icon-512.png"
     }
   },
   "icons": {
-    "48": "icons/icon-48.png",
-    "96": "icons/icon-96.png"
+    "512": "icons/icon-512.png"
   },
   "browser_specific_settings": {
     "gecko": {
       "id": "protonmail-translate@extension",
-      "strict_min_version": "109.0"
+      "strict_min_version": "142.0",
+      "data_collection_permissions": {
+        "required": ["none"],
+        "is_exempt": true
+      }
     }
   }
 }
