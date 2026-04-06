@@ -5,7 +5,43 @@
   <link rel="stylesheet" href="popup.css">
 </head>
 <body>
-  <h1>Proton Mail Translate</h1>
+  <h1>pm-translate v0.2.0</h1>
+
+  <label for="translationApi">Translation API:</label>
+  <select id="translationApi">
+    <option value="google">Google Translate</option>
+    <option value="deepl">DeepL</option>
+    <option value="libretranslate">LibreTranslate</option>
+    <option value="lingva">Lingva Translate</option>
+  </select>
+
+  <div id="deeplSettings" style="display: none;">
+    <label for="deeplApiKey">API key:</label>
+    <input type="text" id="deeplApiKey" placeholder="Required">
+
+    <label for="deeplUrl">DeepL API URL:</label>
+    <input type="url" id="deeplUrl" placeholder="https://api-free.deepl.com/" value="https://api-free.deepl.com/">
+  </div>
+
+  <div id="libreTranslateSettings" style="display: none;">
+    <label for="libreTranslateUrl">LibreTranslate URL:</label>
+    <input type="url" id="libreTranslateUrl" placeholder="https://libretranslate.com/" value="https://libretranslate.com/">
+
+    <label for="libreTranslateApiKey">API key:</label>
+    <input type="text" id="libreTranslateApiKey" placeholder="Optional">
+  </div>
+
+  <div id="lingvaSettings" style="display: none;">
+    <label for="lingvaUrl">Lingva URL:</label>
+    <input type="url" id="lingvaUrl" placeholder="https://lingva.ml/" value="https://lingva.ml/">
+  </div>
+
+  <div id="fallbackSettings" style="display: none;">
+    <label class="checkbox-label">
+      <input type="checkbox" id="fallbackToGoogle">
+      Fallback on Google Translate
+    </label>
+  </div>
 
   <label for="sourceLang">Source language:</label>
   <select id="sourceLang">

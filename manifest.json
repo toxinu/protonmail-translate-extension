@@ -1,12 +1,16 @@
 {
   "manifest_version": 2,
   "name": "Proton Mail Translate",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Translate emails in Proton Mail webmail",
   "permissions": [
     "activeTab",
     "storage",
-    "https://translate.googleapis.com/*"
+    "https://translate.googleapis.com/*",
+    "https://api-free.deepl.com/*",
+    "https://api.deepl.com/*",
+    "https://libretranslate.com/*",
+    "https://lingva.ml/*"
   ],
   "background": {
     "scripts": ["background.js"]

@@ -20,12 +20,13 @@ function createTranslateIcon() {
 /**
  * Translate text via the background script (Google Translate API).
  */
-async function translateText(text, sourceLang, targetLang) {
+async function translateText(text, sourceLang, targetLang, apiSettings) {
   const resp = await browser.runtime.sendMessage({
     type: "translate",
     text,
     sourceLang,
     targetLang,
+    ...apiSettings,
   });
   if (!resp.ok) {
     throw new Error(resp.error || "Translation failed");
@@ -36,11 +37,30 @@ async function translateText(text, sourceLang, targetLang) {
 /**
  * Get the user's language preferences from storage.
  */
-async function getLanguagePrefs() {
-  const result = await browser.storage.local.get(["sourceLang", "targetLang"]);
+async function getTranslationPrefs() {
+  const result = await browser.storage.local.get([
+    "sourceLang",
+    "targetLang",
+    "translationApi",
+    "deeplApiKey",
+    "deeplUrl",
+    "libreTranslateUrl",
+    "libreTranslateApiKey",
+    "lingvaUrl",
+    "fallbackToGoogle",
+  ]);
   return {
     sourceLang: result.sourceLang || "auto",
     targetLang: result.targetLang || "en",
+    apiSettings: {
+      translationApi: result.translationApi || "google",
+      deeplApiKey: result.deeplApiKey || "",
+      deeplUrl: result.deeplUrl || "",
+      libreTranslateUrl: result.libreTranslateUrl || "",
+      libreTranslateApiKey: result.libreTranslateApiKey || "",
+      lingvaUrl: result.lingvaUrl || "",
+      fallbackToGoogle: !!result.fallbackToGoogle,
+    },
   };
 }
 
@@ -87,7 +107,7 @@ const SEPARATOR = " ||| ";
  * Translate all text nodes in the content root while preserving HTML structure.
  * Returns an array of { node, originalText } for restoring later.
  */
-async function translateNodes(contentRoot, sourceLang, targetLang) {
+async function translateNodes(contentRoot, sourceLang, targetLang, apiSettings) {
   const textNodes = collectTextNodes(contentRoot);
   if (textNodes.length === 0) return [];
 
@@ -97,7 +117,7 @@ async function translateNodes(contentRoot, sourceLang, targetLang) {
   }));
 
   const combined = textNodes.map((n) => n.textContent.trim()).join(SEPARATOR);
-  const translated = await translateText(combined, sourceLang, targetLang);
+  const translated = await translateText(combined, sourceLang, targetLang, apiSettings);
 
   const parts = translated.split("|||");
   textNodes.forEach((node, i) => {
@@ -123,8 +143,8 @@ async function handleTranslate(bodyEl) {
   const textNodes = collectTextNodes(contentRoot);
   if (textNodes.length === 0) return;
 
-  const { sourceLang, targetLang } = await getLanguagePrefs();
-  const originals = await translateNodes(contentRoot, sourceLang, targetLang);
+  const { sourceLang, targetLang, apiSettings } = await getTranslationPrefs();
+  const originals = await translateNodes(contentRoot, sourceLang, targetLang, apiSettings);
   translationState.set(bodyEl, { translated: true, originals });
 }
 
